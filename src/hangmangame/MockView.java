@@ -39,6 +39,11 @@ public class MockView implements IHangmanGUI{
     }
 
     @Override
+    public void addFeatures(Features features) {
+        return;
+    }
+
+    @Override
     public void clearInputString() {
         return;
     }

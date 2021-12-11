@@ -4,6 +4,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -23,6 +26,7 @@ public class HangmanGUI extends JFrame implements IHangmanGUI{
     private JLabel chancesLabel;
     private JLabel chanceRightLabel;
     private JLabel imageLabel;
+    private HangmanConsoleController controller;
 
 
     public HangmanGUI(String title){
@@ -33,12 +37,11 @@ public class HangmanGUI extends JFrame implements IHangmanGUI{
         this.setMinimumSize(new Dimension(300,410));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(mainPanel);
-
         imageLabel.setIcon(new ImageIcon(new ImageIcon(getImage(8)).getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(),Image.SCALE_REPLICATE))) ;
-
         checkButton.setActionCommand("Check Button");
         newGameButton.setActionCommand("New Game Button");
         quitButton.setActionCommand("Quit Button");
+
         this.pack();
     }
 
@@ -62,6 +65,23 @@ public class HangmanGUI extends JFrame implements IHangmanGUI{
     @Override
     public void setWordBoard(String s) {
         boardLabel.setText(s);
+    }
+
+    @Override
+    public void addFeatures(Features features) {
+        gameLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                super.mousePressed(e);
+                features.getHint();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                features.disappear();
+            }
+        });
     }
 
     @Override

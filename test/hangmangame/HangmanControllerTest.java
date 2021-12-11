@@ -16,7 +16,7 @@ public class HangmanControllerTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testConstructorWithInvalidModel(){
-        IHangmanGUI gameLog = new HangmanGUI("MOCK GAME");
+        IHangmanGUI gameLog = new HangmanGUI("Hangman Game");
         HangmanConsoleController c = new HangmanConsoleController(null, gameLog);
     }
 

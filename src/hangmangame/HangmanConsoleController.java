@@ -1,13 +1,12 @@
 package hangmangame;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 /**
  * Create a class HangmanConsoleController implementing the HangmanController interface with two fields input and output
  */
-public class HangmanConsoleController implements HangmanController, ActionListener {
+public class HangmanConsoleController implements HangmanController, ActionListener, Features {
     private final IHangmanGUI view;
     private Hangman model;
 
@@ -22,7 +21,9 @@ public class HangmanConsoleController implements HangmanController, ActionListen
         this.model = model;
         this.view = view;
         this.view.setListener(this);
+        this.view.addFeatures(this);
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e){
@@ -35,7 +36,12 @@ public class HangmanConsoleController implements HangmanController, ActionListen
                 this.view.setResult(this.controlGame(this.model, this.view));
                 this.view.setWordBoard(model.getWordBoard());
                 this.view.setChancesLeft(model.getChancesLeft());
-                this.view.setPic(model.getChancesLeft());
+                if(this.model.getWinOrNot()){
+                    this.view.setPic(9);
+                }
+                else{
+                    this.view.setPic(model.getChancesLeft());
+                }
                 this.view.clearInputString();
             }
             case "New Game Button" -> {
@@ -48,6 +54,16 @@ public class HangmanConsoleController implements HangmanController, ActionListen
             }
             case "Quit Button" -> System.exit(0);
         }
+    }
+
+    @Override
+    public void getHint(){
+        this.view.setResult(this.model.getGuessWord());
+    }
+
+    @Override
+    public void disappear(){
+        this.view.setResult("");
     }
 
     @Override
@@ -74,5 +90,8 @@ public class HangmanConsoleController implements HangmanController, ActionListen
         }
         return "";
     }
-
+/*
+    public String getGuessWord(){
+        return this.model.getGuessWord();
+    }*/
 }
